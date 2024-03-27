@@ -2,6 +2,8 @@ import { Router } from 'express';
 import * as UserModel from '../models/users';
 import { hashPassword } from '../utils/hashPassword'
 
+
+
 const router = Router();
 
 //Create a new user
@@ -53,6 +55,8 @@ router.get('/getUserById/:id', async (req, res) => {
     res.status(500).json({ message: 'Error getting user by id', error});
   }
 })
+
+
 
 
 export default router;
