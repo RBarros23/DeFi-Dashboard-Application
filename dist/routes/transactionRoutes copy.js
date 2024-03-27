@@ -33,51 +33,57 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const UserModel = __importStar(require("../models/users"));
-const hashPassword_1 = require("../utils/hashPassword");
+const UserModel = __importStar(require("../models/transactionLog"));
 const router = (0, express_1.Router)();
-//Create a new user
+//Create a new transaction
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, password } = req.body;
-        const passwordHash = yield (0, hashPassword_1.hashPassword)(password);
-        const newUser = yield UserModel.createUser(email, passwordHash);
-        res.status(201).json(newUser);
+        const { userId, transactionType, amount, currency } = req.body;
+        const newTransaction = yield UserModel.createTransactionLog(userId, transactionType, amount, currency);
+        res.status(201).json(newTransaction);
     }
     catch (error) {
         res.status(500).json({ message: 'Error creating user', error });
     }
 }));
 //Get all users
-router.get('/getAllUsers', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/getAllTransactions', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const allUsers = yield UserModel.getAllUsers();
-        res.status(200).json(allUsers);
+        const getAllTransactions = yield UserModel.getAllTransactions();
+        res.status(201).json(getAllTransactions);
     }
     catch (error) {
         res.status(500).json({ message: 'Error getting all users', error });
     }
 }));
 //Get user by email
-router.get('/getUserByEmail/:email', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/getTransactionsByUserId/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email } = req.params;
-        const user = yield UserModel.getUserByEmail(email);
-        res.status(200).json(user);
+        const { userId } = req.params;
+        const userIdNumber = parseInt(userId, 10);
+        if (isNaN(userIdNumber)) {
+            return res.status(400).json({ message: 'userId is not a valid number' });
+        }
+        const transaction = yield UserModel.getTransactionsById(userIdNumber);
+        res.status(201).json(transaction);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error getting user by email', error });
+        res.status(500).json({ message: 'Error getting all users', error });
     }
 }));
 //Get user by id
-router.get('/getUserById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/getTransactionsById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const user = yield UserModel.getUserById(id);
-        res.status(200).json(user);
+        const userIdNumber = parseInt(id, 10);
+        if (isNaN(userIdNumber)) {
+            return res.status(400).json({ message: 'userId is not a valid number' });
+        }
+        const user = yield UserModel.getTransactionsById(userIdNumber);
+        res.status(201).json(user);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error getting user by id', error });
+        res.status(500).json({ message: 'Error getting all users', error });
     }
 }));
 exports.default = router;

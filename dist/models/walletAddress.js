@@ -24,7 +24,7 @@ CREATE TABLE wallet_addresses (
     encrypted_wallet_address TEXT NOT NULL
 );
  */
-const createWallet = (id, user_id, encrypted_wallet_address) => __awaiter(void 0, void 0, void 0, function* () {
+const createWallet = (user_id, encrypted_wallet_address) => __awaiter(void 0, void 0, void 0, function* () {
     const { rows } = yield db_1.default.query('INSERT INTO wallet_addresses(user_id, encrypted_wallet_address) VALUES($1, $2) RETURNING *', [user_id, encrypted_wallet_address]);
     return rows[0];
 });

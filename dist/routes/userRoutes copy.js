@@ -52,7 +52,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 router.get('/getAllUsers', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const allUsers = yield UserModel.getAllUsers();
-        res.status(200).json(allUsers);
+        res.status(201).json(allUsers);
     }
     catch (error) {
         res.status(500).json({ message: 'Error getting all users', error });
@@ -61,23 +61,23 @@ router.get('/getAllUsers', (req, res) => __awaiter(void 0, void 0, void 0, funct
 //Get user by email
 router.get('/getUserByEmail/:email', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email } = req.params;
+        const { email } = yield req.params;
         const user = yield UserModel.getUserByEmail(email);
-        res.status(200).json(user);
+        res.status(201).json(user);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error getting user by email', error });
+        res.status(500).json({ message: 'Error getting all users', error });
     }
 }));
 //Get user by id
 router.get('/getUserById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { id } = req.params;
+        const { id } = yield req.params;
         const user = yield UserModel.getUserById(id);
-        res.status(200).json(user);
+        res.status(201).json(user);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error getting user by id', error });
+        res.status(500).json({ message: 'Error getting all users', error });
     }
 }));
 exports.default = router;

@@ -11,7 +11,7 @@ CREATE TABLE wallet_addresses (
 );
  */
 
-export const createWallet = async (id: string, user_id: string, encrypted_wallet_address: string) => {
+export const createWallet = async (user_id: string, encrypted_wallet_address: string) => {
     const { rows } = await pool.query('INSERT INTO wallet_addresses(user_id, encrypted_wallet_address) VALUES($1, $2) RETURNING *', [user_id, encrypted_wallet_address]);
     return rows[0];
 }
@@ -26,7 +26,7 @@ export const getWalletById = async (id: string) => {
     return rows[0];
 }
 
-export const getWalletByUserId = async (user_id: number) => {
+export const getWalletByUserId = async (user_id: string) => {
     const { rows } = await pool.query('SELECT * FROM wallet_addresses WHERE user_id = $1', [user_id]);
     return rows[0];
 }

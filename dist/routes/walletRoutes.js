@@ -33,51 +33,60 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const UserModel = __importStar(require("../models/users"));
-const hashPassword_1 = require("../utils/hashPassword");
+const UserModel = __importStar(require("../models/walletAddress"));
 const router = (0, express_1.Router)();
-//Create a new user
+//Create a new transaction
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { email, password } = req.body;
-        const passwordHash = yield (0, hashPassword_1.hashPassword)(password);
-        const newUser = yield UserModel.createUser(email, passwordHash);
-        res.status(201).json(newUser);
+        const { userId, encrypted_wallet_address } = req.body;
+        const newWallet = yield UserModel.createWallet(userId, encrypted_wallet_address);
+        res.status(201).json(newWallet);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error creating user', error });
+        res.status(500).json({ message: 'Error creating wallet', error });
     }
 }));
 //Get all users
-router.get('/getAllUsers', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/getAllWallets', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const allUsers = yield UserModel.getAllUsers();
-        res.status(200).json(allUsers);
+        const allWallets = yield UserModel.getAllWallets();
+        res.status(200).json(allWallets);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error getting all users', error });
-    }
-}));
-//Get user by email
-router.get('/getUserByEmail/:email', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { email } = req.params;
-        const user = yield UserModel.getUserByEmail(email);
-        res.status(200).json(user);
-    }
-    catch (error) {
-        res.status(500).json({ message: 'Error getting user by email', error });
+        res.status(500).json({ message: 'Error getting all wallets', error });
     }
 }));
 //Get user by id
-router.get('/getUserById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get('/getWalletById/:id', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { id } = req.params;
-        const user = yield UserModel.getUserById(id);
-        res.status(200).json(user);
+        const WalletById = yield UserModel.getWalletById(id);
+        res.status(200).json(WalletById);
     }
     catch (error) {
-        res.status(500).json({ message: 'Error getting user by id', error });
+        res.status(500).json({ message: 'Error getting wallet by user', error });
+    }
+}));
+//Get user by userId
+router.get('/getWalletByUserId/:userId', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { userId } = req.params;
+        const wallet = yield UserModel.getWalletByUserId(userId);
+        res.status(200).json(wallet);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error getting wallet by user ID', error });
+    }
+}));
+//Get user by userId
+router.get('/getWalletByAddress/:address', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { address } = req.params;
+        const wallet = yield UserModel.getWalletByAddress(address);
+        res.status(200).json(wallet);
+    }
+    catch (error) {
+        res.status(500).json({ message: 'Error getting wallet by user ID', error });
     }
 }));
 exports.default = router;

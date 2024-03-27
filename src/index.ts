@@ -1,11 +1,22 @@
 import express, { Request, Response } from 'express';
-import router from './routes/userRoutes';
+import usersRouter from './routes/userRoutes';
+import transaction from './routes/transactionRoutes';
+import wallet from './routes/walletRoutes';
 
 const app = express();
 
 app.use(express.json());
 
-app.use('/', router);
+//Route for users
+app.use('/users', usersRouter);
+
+//Route for transactions
+app.use('/transactions', transaction);
+
+//Route for wallets
+app.use('/wallet', wallet);
+
+
 app.get('/', (req: Request, res: Response) => {
   res.send('Hello, blockchain world!');
 });

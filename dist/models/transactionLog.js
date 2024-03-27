@@ -34,7 +34,7 @@ const createTransactionLog = (userId, transactionType, amount, currency) => __aw
     return rows[0];
 });
 exports.createTransactionLog = createTransactionLog;
-const getAllTransactions = (id) => __awaiter(void 0, void 0, void 0, function* () {
+const getAllTransactions = () => __awaiter(void 0, void 0, void 0, function* () {
     const { rows } = yield db_1.default.query('SELECT * FROM transaction_logs');
     return rows;
 });

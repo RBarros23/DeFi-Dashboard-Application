@@ -21,7 +21,7 @@ export const createTransactionLog = async (userId: number, transactionType: stri
   return rows[0];
 };
 
-export const getAllTransactions = async (id: number) => {
+export const getAllTransactions = async () => {
   const { rows } = await pool.query('SELECT * FROM transaction_logs');
   return rows;
 };
