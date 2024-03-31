@@ -15,7 +15,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-//Get all users
+//Get all transactions
 router.get('/getAllTransactions', async (req, res) => {
 
   try{

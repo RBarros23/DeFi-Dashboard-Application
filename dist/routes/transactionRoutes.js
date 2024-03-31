@@ -46,7 +46,7 @@ router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         res.status(500).json({ message: 'Error creating user', error });
     }
 }));
-//Get all users
+//Get all transactions
 router.get('/getAllTransactions', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const getAllTransactions = yield UserModel.getAllTransactions();
