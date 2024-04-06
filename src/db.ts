@@ -1,10 +1,10 @@
 import { Pool } from 'pg';
 
 const pool = new Pool({
-    user: 'ruibarros',
+    user: '',
     host: 'localhost',
     database: 'defiAppDB',
-    password: 'espinho23',
+    password: '',
     port: 5432,
 });
 
